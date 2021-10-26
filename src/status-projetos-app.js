@@ -1,7 +1,7 @@
 import './status-projetos-app.css';
 import { useRoutes } from 'hookrouter';
-import Login from './componentes/login/login';
-import Home from './componentes/home/home';
+import Login from './pages/login';
+import Home from './pages/home';
 
 const routes = {
   '/': () => <Home />,
