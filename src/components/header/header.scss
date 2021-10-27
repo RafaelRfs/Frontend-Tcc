@@ -1,0 +1,140 @@
+@import '../../index.scss';
+
+nav.nav-fox {
+
+    @extend .background-fox-animado;
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+    border: none;
+    height: 60px;
+
+    .navbar-brand {
+        padding: 0 15px 0 15px;
+        background-color: rgba(0, 0, 0, 0.03);
+        height: 60px;
+        position: relative;
+        width: 210px;
+
+        &:hover, &:focus, &:active {
+            background-color: rgba(255, 255, 255, 0.10);
+        }
+
+        span#logo-foxaccount {
+            img {
+                position: absolute;
+                display: none;
+            }
+
+            svg {
+                padding-top: 6px;
+            }
+        }
+    }
+
+    .navbar-link-fox {
+        color: #FFF !important;
+        text-transform: uppercase;
+        padding: 20px;
+        letter-spacing: 2px;
+
+        &:hover, &:focus, &:active {
+            color: #FFF;
+        }
+    }
+
+    .navbar-fox {
+        .navbar-link-fox {
+            @extend .navbar-link-fox;
+
+            &::after {
+                transition: all .2s 0s ease-in-out;
+                width: 0%;
+            }
+
+            &.active::after, &:hover::after {
+                content: '';
+                width: 40%;
+                height: 3px;
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin-left: auto;
+                margin-right: auto;
+                background-color: #FFF;
+            }
+        }
+    }
+
+    div.dropdown {
+        margin-right: -8px;
+
+        & > a#collasible-nav-dropdown {
+            @extend .navbar-link-fox;
+            font-size: 13px;
+            padding: 17px 20px;
+            line-height: 20px;
+            background-color: rgba(0, 0, 0, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover, &:focus, &:active {
+                background-color: rgba(255, 255, 255, 0.10);
+            }
+
+            i {
+                font-size: 28px;
+                margin: 0 5px;
+            }
+
+            span {
+                margin: 0 0 0 10px;
+            }
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            width: 100%;
+            border-radius: 0;
+            border: none;
+            margin-top: 2px;
+            -webkit-box-shadow: 2px 0 15px rgba(0, 0, 0, .15);
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.15);
+            padding: 0;
+
+                > a, button {
+                    white-space: normal;
+                    padding: 15px 20px;
+                    display: block;
+                    clear: both;
+                    font-weight: normal;
+                    line-height: 1.42857143;
+                    color: #333 !important;
+                    outline: none;
+                }
+
+                button {
+                    width: 100%;
+                    text-align: left;
+                    background-color: transparent;
+                    border: none;
+
+                    &:hover {
+                        background-color: #f5f5f5;
+                    }
+                }
+
+            > li.divider {
+                margin: 0;
+            }
+        }
+    }
+}
+
+a.logo-foxaccount {
+    width: 220px !important;
+    padding-top: 13px !important;
+    color: #FFF !important;
+}
