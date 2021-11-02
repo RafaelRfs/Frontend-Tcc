@@ -24,7 +24,7 @@ function Dashboard() {
                     <Row>
                         <Col md={4}>
                             <Card className="panel panel-default painel-dashboard-fox">
-                                <a href="#">
+                                <a href="/admin/projetos">
                                     <Card.Body className="panel-body">
                                         <div class="icon">
                                             <FontAwesomeIcon icon="briefcase" />
