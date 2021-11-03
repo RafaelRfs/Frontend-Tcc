@@ -1,11 +1,12 @@
-import Header from '../../../components/header'
-import Footer from '../../../components/footer'
-import Wrapper from '../../../components/wrapper'
+import Header from '../../../components/header';
+import Footer from '../../../components/footer';
+import Wrapper from '../../../components/wrapper';
+import ListarProjetos from '../../../components/projetos/listarProjetos';
 import './projetos.scss';
-import { Container, Row, Col, Nav } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Container, Row, Col, Nav } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus} from "@fortawesome/free-solid-svg-icons";
 
 library.add(faPlus);
 
@@ -29,7 +30,7 @@ function Projetos() {
                         </Col>
                     </Row>
                     <div class="nav-pills-fox-container">
-                        <Nav variant="tabs" className="nav-pills-fox">
+                        <Nav defaultActiveKey="#1" variant="tabs" className="nav-pills-fox">
                             <Nav.Item>
                                 <Nav.Link href="#1">Em andamento (0)</Nav.Link>
                             </Nav.Item>
@@ -42,6 +43,8 @@ function Projetos() {
                         </Nav>
                         <hr />
                     </div>
+
+                    <ListarProjetos busca="andamento" />
                 </Container>
             </Wrapper>
             <Footer />
