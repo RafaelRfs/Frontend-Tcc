@@ -1,0 +1,231 @@
+@import '../../index.scss';
+
+div.login {
+    background-image: url('../../assets/login/background-login.jpg');
+    background-repeat: repeat;
+    background-size: cover;
+    background-position: center center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+
+    &:after {
+        content: "";
+        @extend .background-fox-animado;
+        opacity: .99;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 0;
+    }
+
+    &.wallpaper:after {
+        opacity: .90;
+    }
+
+    form {
+        z-index: 1;
+        position: relative;
+        top: 50%;
+    }
+
+    div.validation-summary-errors {
+        position: relative;
+        text-align: center;
+        top: 50px;
+        left: 50%;
+        width: 300px;
+        margin: 0px -150px;
+        background-color: #FFF;
+        color: #f31212;
+        padding: 5px;
+        border-radius: 5px;
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    #login {
+        width: 305px;
+    }
+
+    #login .logo a {
+        display: block;
+        width: 305px;
+        height: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        -o-transition: all 700ms;
+        -moz-transition: all 700ms;
+        -webkit-transition: all 700ms;
+        transition: all 700ms;
+        opacity: 1;
+        color: #555;
+        font-size: x-large;
+    }
+
+    #login .logo a:hover {
+        opacity: 0.7;
+    }
+
+    #login .input-fields {
+        border-radius: 2px;
+    }
+
+    #login > span {
+        display: block;
+        text-align: Center;
+        margin: 25px 0 0 0;
+        font-size: 15px;
+        color: #899197;
+    }
+
+    #login > span a {
+        color: #fff;
+        text-decoration: underline;
+        margin-left: 10px;
+    }
+
+    .wrapper-login {
+        margin-bottom: 20px;
+    }
+
+    .wrapper-login input {
+        display: block;
+        border: none;
+        width: 100%;
+        max-width: 100%;
+        height: 43px;
+        padding-left: 60px;
+        font-size: 15px;
+        color: #96999f;
+        line-height: 43px;
+        outline: none;
+    }
+
+    .wrapper-login input.user {
+        border-radius: 3px 3px 0 0;
+        border-bottom: 1px solid #e5e7e8;
+        background: #fff url('../../assets/login/login-icons-1.png') no-repeat 0 0;
+        font-weight: 500;
+    }
+
+    .wrapper-login input.user:focus {
+        background: #fff url('../../assets/login/login-icons-1.png') no-repeat 0 -43px;
+        box-shadow: none !important;
+    }
+
+    .wrapper-login input.password {
+        border-radius: 0 0 3px 3px;
+        background: #fff url('../../assets/login/login-icons-2.png') no-repeat 0 0;
+    }
+
+    .wrapper-login input.password:focus {
+        background: #fff url('../../assets/login/login-icons-2.png') no-repeat 0 -43px;
+        box-shadow: none !important;
+    }
+
+    .login-button {
+        background-color: #555;
+        display: block;
+        height: 43px;
+        width: 305px;
+        text-align: center;
+        line-height: 43px;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 500;
+        border-radius: 3px;
+        -o-transition: all 160ms;
+        -moz-transition: all 160ms;
+        -webkit-transition: all 160ms;
+        transition: all 160ms;
+        padding: 0;
+
+        svg {
+            height: 20px;
+        }
+    }
+
+    .login-button:hover {
+        color: #fff;
+    }
+
+    .login-button:focus {
+        color: #fff;
+        text-decoration: none;
+    }
+}
+
+#loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #fff;
+    border-radius: 50%;
+    border-top: 16px solid #555;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+
+    to {
+        bottom: 0px;
+        opacity: 1
+    }
+}
+
+@keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+
+    to {
+        bottom: 0;
+        opacity: 1
+    }
+}
