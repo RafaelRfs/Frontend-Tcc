@@ -1,6 +1,6 @@
 import React from 'react'
 import './header.scss';
-import { Navbar, Nav, NavDropdown, Container, Offcanvas } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCheckSquare, faQuestionCircle, faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -23,7 +23,7 @@ function Header() {
 
                 <Nav>
                     <NavDropdown className="navbar-right" title={navDropdownTitle} id="collasible-nav-dropdown">
-                        <NavDropdown.Item className="navbar-link-fox" href="/">Sair</NavDropdown.Item>
+                        <NavDropdown.Item className="navbar-link-fox" href="/login">Sair</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
             </Container>

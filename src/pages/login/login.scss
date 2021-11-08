@@ -107,6 +107,12 @@ div.login {
         outline: none;
     }
 
+    .wrapper-login input.is-invalid {
+        display: block;
+        border: solid;
+        border-color: #dc3545;
+    }
+
     .wrapper-login input.user {
         border-radius: 3px 3px 0 0;
         border-bottom: 1px solid #e5e7e8;
