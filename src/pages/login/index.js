@@ -11,6 +11,8 @@ import { navigate } from 'hookrouter';
 
 function Login() {
 
+    sessionStorage.removeItem('token');
+
     library.add(faCheckSquare);
     const [spinner, setSpinner] = useState(true);
 
@@ -34,6 +36,7 @@ function Login() {
             .then(response => {
                 sessionStorage.setItem('token', response.data.token);
                 navigate('/admin/dashboard');
+                window.location.reload(false);
             })
             .catch(error => {
                 setSpinner(false);

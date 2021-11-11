@@ -7,10 +7,30 @@ import { Container, Row, Col, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faPlus} from "@fortawesome/free-solid-svg-icons";
+import api from '../../../api';
 
 library.add(faPlus);
 
 function Projetos() {
+
+    async function CarregarProjetos()
+    {
+        // await api.post('v1/api/projects', values)
+        //     .then(response => {
+        //         setTitleModal('Sucesso!');
+        //         setTextModal('O projeto foi cadastrado com sucesso!');
+        //         setShowModal(true);
+        //         resetForm();
+        //     })
+        //     .catch(error => {
+        //         setSpinner(false);
+        //         setTitleModal('Ops!');
+        //         setTextModal('Ocorreu um erro:' + error);
+        //         setShowModal(true);
+        //         console.error(error);
+        //     });
+    }
+
     return (
         <>
             <Header />

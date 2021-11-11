@@ -1,5 +1,5 @@
 import './status-projetos-app.css';
-import { useRoutes } from 'hookrouter';
+import { useRoutes, navigate } from 'hookrouter';
 import Login from './pages/login';
 import Home from './pages/home';
 import Dashboard from './pages/admin/dashboard'
@@ -7,15 +7,29 @@ import Projetos from './pages/admin/projetos'
 import CadastrarProjeto from './pages/admin/projetos/cadastrar'
 
 const routes = {
-  '/': () => <Home />,
+  '/': () => <Login />,
   '/login': () => <Login />,
-  '/admin/dashboard': () => <Dashboard />,
-  '/admin/projetos': () => <Projetos />,
-  '/admin/projetos/cadastrar': () => <CadastrarProjeto />
+  '/admin/*': () => <AuthedPages />,
 }
 
 function StatusProjetosApp() {
-  return useRoutes(routes);
+  const result = useRoutes(routes);
+  return result || 'Not found';
 }
 
-export default StatusProjetosApp;
+function AuthedPages() {
+
+  const authedRoutes = {
+    '/admin/dashboard': () => <Dashboard />,
+    '/admin/projetos': () => <Projetos />,
+    '/admin/projetos/cadastrar': () => <CadastrarProjeto />
+  };
+
+  if (!sessionStorage.getItem('token')) {
+    navigate('/login');
+  }
+
+  return useRoutes(authedRoutes);
+}
+
+export { StatusProjetosApp, AuthedPages };

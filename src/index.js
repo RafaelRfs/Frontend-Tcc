@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import StatusProjetosApp from './status-projetos-app';
+import { StatusProjetosApp, AuthedPages } from './status-projetos-app';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
 
 ReactDOM.render(
-  <StatusProjetosApp />,
+  <>
+    <StatusProjetosApp />
+    <AuthedPages />
+  </>,
   document.getElementById('root')
 );
 
