@@ -3,7 +3,7 @@ import Footer from '../../../../components/footer'
 import Wrapper from '../../../../components/wrapper'
 import '../projetos.scss';
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Modal } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button, Modal, Spinner } from 'react-bootstrap'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Formik } from 'formik';
@@ -14,7 +14,7 @@ library.add(faPlus);
 
 function CadastrarProjeto() {
 
-    const [spinner, setSpinner] = useState(true);
+    const [spinner, setSpinner] = useState(false);
 
     const [showModal, setShowModal] = useState(false);
     const [textModal, setTextModal] = useState(null);
@@ -36,6 +36,7 @@ function CadastrarProjeto() {
 
         await api.post('v1/api/projects', values)
             .then(response => {
+                setSpinner(false);
                 setTitleModal('Sucesso!');
                 setTextModal('O projeto foi cadastrado com sucesso!');
                 setShowModal(true);
@@ -52,6 +53,14 @@ function CadastrarProjeto() {
 
     return (
         <>
+            <div className="container-spinner" hidden={!spinner}>
+                <Spinner
+                    id="custom-spinner"
+                    style={{ 'position': 'absolute', 'top': '50%', 'left': '50%' }}
+                    animation="border"
+                    role="status" />
+            </div>
+
             <Header />
             <Wrapper>
                 <Container>
@@ -64,7 +73,7 @@ function CadastrarProjeto() {
                         <Col md={12}>
                             <div class="card-fox">
                                 <Formik
-                                    onSubmit={async (values, { resetForm })  => NovoProjeto(values, { resetForm })}
+                                    onSubmit={async (values, { resetForm }) => NovoProjeto(values, { resetForm })}
                                     initialValues={{
                                         nome: '',
                                         cliente: '',

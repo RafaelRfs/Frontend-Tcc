@@ -3,36 +3,48 @@ import Footer from '../../../components/footer';
 import Wrapper from '../../../components/wrapper';
 import ListarProjetos from '../../../components/projetos/listarProjetos';
 import './projetos.scss';
-import { Container, Row, Col, Nav } from 'react-bootstrap';
+import { Container, Row, Col, Nav, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPlus} from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import api from '../../../api';
+import { useState, useEffect } from 'react';
 
 library.add(faPlus);
 
 function Projetos() {
+    const [spinner, setSpinner] = useState(true);
+    let [projetos, setProjetos] = useState([]);
 
-    async function CarregarProjetos()
-    {
-        // await api.post('v1/api/projects', values)
-        //     .then(response => {
-        //         setTitleModal('Sucesso!');
-        //         setTextModal('O projeto foi cadastrado com sucesso!');
-        //         setShowModal(true);
-        //         resetForm();
-        //     })
-        //     .catch(error => {
-        //         setSpinner(false);
-        //         setTitleModal('Ops!');
-        //         setTextModal('Ocorreu um erro:' + error);
-        //         setShowModal(true);
-        //         console.error(error);
-        //     });
-    }
+    useEffect(() => {
+        setSpinner(true);
+
+        async function CarregarProjetos() {
+            await api.get('v1/api/projects/by-user')
+                .then(response => {
+                    setProjetos(response.data);
+                    setSpinner(false);
+                })
+                .catch(error => {
+                    setSpinner(false);
+                    console.error(error);
+                });
+        }
+
+        CarregarProjetos();
+    }, []);
+
 
     return (
         <>
+            <div className="container-spinner" hidden={!spinner}>
+                <Spinner
+                    id="custom-spinner"
+                    style={{ 'position': 'absolute', 'top': '50%', 'left': '50%' }}
+                    animation="border"
+                    role="status" />
+            </div>
+
             <Header />
             <Wrapper>
                 <Container>
@@ -64,7 +76,7 @@ function Projetos() {
                         <hr />
                     </div>
 
-                    <ListarProjetos busca="andamento" />
+                    <ListarProjetos busca="andamento" projetos={projetos} />
                 </Container>
             </Wrapper>
             <Footer />
