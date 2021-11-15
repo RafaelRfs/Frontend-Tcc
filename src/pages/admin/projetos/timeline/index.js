@@ -9,12 +9,14 @@ import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCog, faBell } from "@fortawesome/free-solid-svg-icons";
+import Select from 'react-select'
 
 library.add(faCog, faBell);
 
 function ListarTimeline(referencia) {
     const [spinner, setSpinner] = useState(true);
     let [projeto, setProjeto] = useState([]);
+    let [status, setStatus] = useState([]);
 
     useEffect(() => {
         setSpinner(true);
@@ -22,7 +24,6 @@ function ListarTimeline(referencia) {
         async function DetalhesProjeto() {
             await api.get('v1/api/projects/' + referencia.id)
                 .then(response => {
-                    console.log(response);
                     setProjeto(response.data);
                     setSpinner(false);
                 })
@@ -32,7 +33,26 @@ function ListarTimeline(referencia) {
                 });
         }
 
+        async function ListarStatus() {
+            await api.get('v1/api/status')
+                .then(response => {
+                    let options = response.data.map((s) => {
+                        return {
+                            label: s.nome,
+                            id: s.id
+                        }
+                    });
+                    setStatus(options);
+                    setSpinner(false);
+                })
+                .catch(error => {
+                    setSpinner(false);
+                    console.error(error);
+                });
+        }
+
         DetalhesProjeto();
+        ListarStatus();
     }, []);
 
     return (
@@ -82,7 +102,7 @@ function ListarTimeline(referencia) {
                         </Col>
 
                         <Col md={2}>
-                        <a href={`/admin/projetos/notificacao/${projeto.id}`}>
+                            <a href={`/admin/projetos/notificacao/${projeto.id}`}>
                                 <div class="card-fox-gray">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -98,6 +118,64 @@ function ListarTimeline(referencia) {
                     </Row>
 
                     <hr />
+
+                    <Row className="justify-content-md-center">
+                        <Col md={8}>
+                            <div class="card-fox">
+                                <form method="post" asp-action="UpdateProjectTimeline" asp-controller="Project">
+                                    <input type="hidden" asp-for="ProjectId" value="@ViewBag.ProjectId" />
+                                    <Row>
+                                        <Col md={12}>
+                                            <div class="form-group">
+                                                <label>Adicione uma descrição de como está o projeto</label>
+                                                <textarea asp-for="ProjectDesciption" rows="3" class="form-control"></textarea>
+                                                <span class="alert-fox" asp-validation-for="ProjectDesciption"></span>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md={12}>
+                                            <div class="form-group">
+                                                <label>Selecione uma marcação</label>
+                                                <Select class="form-control select2-basic-icon" options={status} />
+                                                <span class="alert-fox" asp-validation-for="ProjectFlagId"></span>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md={6}>
+                                            <div class="form-group">
+                                                <label>Anexe uma URL</label>
+                                                <input asp-for="AttachUrl" type="text" class="form-control" />
+                                                <span class="alert-fox" asp-validation-for="AttachUrl"></span>
+                                            </div>
+                                        </Col>
+                                        <Col md={6}>
+                                            <div class="form-group">
+                                                <label>Legenda botão</label>
+                                                <input asp-for="ButtonLabel" type="text" class="form-control" />
+                                                <span class="alert-fox" asp-validation-for="ButtonLabel"></span>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md={6}>
+                                            <p class="text-left no-margin-lr">
+                                                <input type="checkbox" asp-for="AlertEmail" checked data-toggle="toggle" data-on="<i class='far fa-bell fa-lg'></i> Alertar" data-off="Desligado" data-onstyle="info" />
+                                            </p>
+                                        </Col>
+                                        <Col md={6}>
+                                            <p class="text-right no-margin-lr">
+                                                <button type="submit" class="btn btn-fox-dynamic">
+                                                    <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Publicar
+                                                </button>
+                                            </p>
+                                        </Col>
+                                    </Row>
+                                </form>
+                            </div>
+                        </Col>
+                    </Row>
 
                     <Row>
                         <Col md={12}>
