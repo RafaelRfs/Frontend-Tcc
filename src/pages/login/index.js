@@ -11,7 +11,7 @@ import { navigate } from 'hookrouter';
 
 function Login() {
 
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
 
     library.add(faCheckSquare);
     const [spinner, setSpinner] = useState(true);
@@ -34,7 +34,7 @@ function Login() {
 
         await api.post('api/auth/login', values)
             .then(response => {
-                sessionStorage.setItem('token', response.data.token);
+                localStorage.setItem('token', response.data.token);
                 navigate('/admin/dashboard');
                 window.location.reload(false);
             })

@@ -17,7 +17,7 @@ function Header() {
 
                 <Nav className="navbar-collapse collapse">
                     <Nav.Link className="navbar-link-fox" href="/admin/dashboard">Dashboard</Nav.Link>
-                    <Nav.Link className="navbar-link-fox" href="#">Projetos</Nav.Link>
+                    <Nav.Link className="navbar-link-fox" href="/admin/projetos">Projetos</Nav.Link>
                     <Nav.Link className="navbar-link-fox" href="#">Ajuda <FontAwesomeIcon icon="question-circle" /></Nav.Link>
                 </Nav>
 
