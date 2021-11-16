@@ -24,10 +24,6 @@ function Login() {
         password: yup.string().required().min(5)
     });
 
-    useEffect(() => {
-        setSpinner(false);
-    }, [spinner]);
-
     async function Login(values) {
 
         setSpinner(true);
@@ -44,6 +40,15 @@ function Login() {
                 console.error(error);
             });
     }
+
+    async function Health() {
+        await api.get('api/token');
+    }
+
+    useEffect(() => {
+        setSpinner(false);
+        Health();
+    }, [spinner]);
 
     return (
         <>
