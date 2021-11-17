@@ -31,12 +31,25 @@ function Login() {
         await api.post('api/auth/login', values)
             .then(response => {
                 localStorage.setItem('token', response.data.token);
+                CarregarUsuario();
+            })
+            .catch(error => {
+                setSpinner(false);
+                setShowModal(true);
+                console.error(error);
+            });
+    }
+
+    async function CarregarUsuario() {
+        await api.get('v1/api/users')
+            .then(response => {
+                localStorage.setItem('usuario', response.data.nome);
+                setSpinner(false);
                 navigate('/admin/dashboard');
                 window.location.reload(false);
             })
             .catch(error => {
                 setSpinner(false);
-                setShowModal(true);
                 console.error(error);
             });
     }

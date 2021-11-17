@@ -4,12 +4,19 @@ import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCheckSquare, faQuestionCircle, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { useState, useEffect } from 'react';
 
 library.add(faCheckSquare, faQuestionCircle, faUserCircle);
 
-const navDropdownTitle = (<div><FontAwesomeIcon icon="user-circle" /> Meu Usuário</div>);
-
 function Header() {
+
+    const [nome, setNome] = useState('');
+    const navDropdownTitle = (<div><FontAwesomeIcon icon="user-circle" /> {nome}</div>);
+
+    useEffect(() => {
+        setNome(localStorage.getItem('usuario'));
+    }, []);
+
     return (
         <Navbar className="navbar navbar-inverse navbar-fixed-top nav-fox">
             <Container fluid>
@@ -23,6 +30,7 @@ function Header() {
 
                 <Nav>
                     <NavDropdown className="navbar-right" title={navDropdownTitle} id="collasible-nav-dropdown">
+                        <NavDropdown.Item className="navbar-link-fox" href="/admin/usuario/editar">Meu Perfil</NavDropdown.Item>
                         <NavDropdown.Item className="navbar-link-fox" href="/login">Sair</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>

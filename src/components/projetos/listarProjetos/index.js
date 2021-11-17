@@ -22,11 +22,12 @@ function ListarProjetos(props) {
         await api.get('v1/api/projects/by-status/' + status)
             .then(response => {
                 setProjetos(response.data);
-                setCountProjetos(projetos.length);
+                setCountProjetos(response.data.length);
                 setSpinner(false);
             })
             .catch(error => {
                 setSpinner(false);
+                setProjetos([]);
                 console.error(error);
             });
     }
@@ -46,11 +47,11 @@ function ListarProjetos(props) {
                 break;
             case 'aguardando-cliente':
                 setHabilitaAguardandoCliente(true);
-                CarregarProjetos('ANALISANDO_INFORMACOES');
+                CarregarProjetos('AGUARDANDO_CLIENTE');
                 break;
             case 'concluido':
                 setHabilitaConcluido(true);
-                CarregarProjetos('CONCLUIDO');
+                CarregarProjetos('FINALIZADO');
                 break;
         }
     }
