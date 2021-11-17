@@ -8,6 +8,7 @@ import CadastrarProjeto from './pages/admin/projetos/cadastrar'
 import EditarProjeto from './pages/admin/projetos/editar'
 import ListarTimeline from './pages/admin/projetos/timeline';
 import GerenciarNotificacoes from './pages/admin/projetos/notificacao';
+import EditarUsuario from './pages/admin/usuario/editar';
 
 const routes = {
   '/': () => <Login />,
@@ -28,7 +29,8 @@ function AuthedPages() {
     '/admin/projetos/cadastrar': () => <CadastrarProjeto />,
     '/admin/projetos/editar/:id': ({id}) => <EditarProjeto id={id} />,
     '/admin/projetos/timeline/:id': ({id}) => <ListarTimeline id={id} />,
-    '/admin/projetos/notificacao/:id': ({id}) => <GerenciarNotificacoes id={id} />
+    '/admin/projetos/notificacao/:id': ({id}) => <GerenciarNotificacoes id={id} />,
+    '/admin/usuario/editar': () => <EditarUsuario />
   };
 
   if (!localStorage.getItem('token')) {

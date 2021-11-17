@@ -38,13 +38,13 @@ function Dashboard() {
                         </Col>
                         <Col md={4}>
                             <Card className="panel panel-default painel-dashboard-fox">
-                                <a href="#">
+                                <a href="/admin/usuario/editar">
                                     <Card.Body className="panel-body">
                                         <div class="icon">
                                             <FontAwesomeIcon icon="user" />
                                         </div>
                                         <div class="text">
-                                            Gerenciamento de Usuários
+                                            Meus dados
                                         </div>
                                     </Card.Body>
                                 </a>
