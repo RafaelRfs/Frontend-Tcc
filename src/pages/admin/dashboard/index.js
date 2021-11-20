@@ -26,10 +26,10 @@ function Dashboard() {
                             <Card className="panel panel-default painel-dashboard-fox">
                                 <a href="/admin/projetos">
                                     <Card.Body className="panel-body">
-                                        <div class="icon">
+                                        <div className="icon">
                                             <FontAwesomeIcon icon="briefcase" />
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             Projetos
                                         </div>
                                     </Card.Body>
@@ -40,10 +40,10 @@ function Dashboard() {
                             <Card className="panel panel-default painel-dashboard-fox">
                                 <a href="/admin/usuario/editar">
                                     <Card.Body className="panel-body">
-                                        <div class="icon">
+                                        <div className="icon">
                                             <FontAwesomeIcon icon="user" />
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             Meus dados
                                         </div>
                                     </Card.Body>

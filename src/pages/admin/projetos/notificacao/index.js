@@ -28,7 +28,6 @@ function GerenciarNotificacoes(referencia) {
         async function DetalhesProjeto() {
             await api.get('v1/api/notifications/by-project/' + referencia.id)
                 .then(response => {
-                    console.log(response);
                     setEmails(response.data);
                     setSpinner(false);
                 })
@@ -100,7 +99,7 @@ function GerenciarNotificacoes(referencia) {
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <div class="card-fox">
+                            <div className="card-fox">
 
                                 <Formik
                                     onSubmit={async (values, { resetForm }) => SalvaEmailNotificacao(values, { resetForm })}
@@ -119,11 +118,11 @@ function GerenciarNotificacoes(referencia) {
                                         <Form onSubmit={handleSubmit} noValidate>
                                             <Row>
                                                 <Col md={6}>
-                                                    <div class="form-group">
+                                                    <div className="form-group">
                                                         <Form.Control
                                                             name="nome"
                                                             type="text"
-                                                            placeholder="Nome do Projeto"
+                                                            placeholder="Nome do Usuário"
                                                             autoComplete="off"
                                                             value={values.nome}
                                                             onChange={handleChange}
@@ -132,7 +131,7 @@ function GerenciarNotificacoes(referencia) {
                                                     </div>
                                                 </Col>
                                                 <Col md={6}>
-                                                    <div class="form-group">
+                                                    <div className="form-group">
                                                         <Form.Control
                                                             name="email"
                                                             type="email"
@@ -145,9 +144,9 @@ function GerenciarNotificacoes(referencia) {
                                                     </div>
                                                 </Col>
                                             </Row>
-                                            <p class="text-right no-margin-lr">
-                                                <button type="submit" class="btn btn-fox-dynamic">
-                                                    <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Salvar E-mail
+                                            <p className="text-right no-margin-lr">
+                                                <button type="submit" className="btn btn-fox-dynamic">
+                                                    <i className="fas fa-cloud-upload-alt" aria-hidden="true"></i> Salvar E-mail
                                                 </button>
                                             </p>
                                         </Form>
@@ -161,7 +160,7 @@ function GerenciarNotificacoes(referencia) {
                             {
                                 emails.map((inscrito, index) => {
                                     return (
-                                        <div class="card-fox email-manage-list">
+                                        <div className="card-fox email-manage-list" key={index}>
                                             <Row>
                                                 <Col md={5}>
                                                     <p>Nome: <strong>{inscrito.nome}</strong></p>

@@ -71,7 +71,7 @@ function CadastrarProjeto() {
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <div class="card-fox">
+                            <div className="card-fox">
                                 <Formik
                                     onSubmit={async (values, { resetForm }) => NovoProjeto(values, { resetForm })}
                                     initialValues={{

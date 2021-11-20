@@ -93,15 +93,15 @@ function EditarProjeto(referencia) {
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <div class="card-fox">
+                            <div className="card-fox">
                                 <Formik
                                     enableReinitialize
                                     onSubmit={async (values, { resetForm }) => AtualizarProjeto(values, { resetForm })}
                                     initialValues={{
-                                        id: projeto.id,
-                                        nome: projeto.nome,
-                                        cliente: projeto.cliente,
-                                        data_previsao_entrega: projeto.data_previsao_entrega
+                                        id: projeto.id || '',
+                                        nome: projeto.nome || '',
+                                        cliente: projeto.cliente || '',
+                                        data_previsao_entrega: projeto.data_previsao_entrega || ''
                                     }} validationSchema={schema}>
                                     {({
                                         handleSubmit,

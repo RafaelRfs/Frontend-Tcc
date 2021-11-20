@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { navigate } from 'hookrouter';
+
 const baseURL = 'https://api-gerenciador-projetos-tcc.herokuapp.com/';
 
 const Api = axios.create({
@@ -7,7 +9,6 @@ const Api = axios.create({
 
 Api.interceptors.request.use(
 	(config) => {
-		console.log('antes');
 		const USER_TOKEN = localStorage.getItem('token');
 		if (USER_TOKEN !== null) {
 			config.headers = {
@@ -24,7 +25,13 @@ Api.interceptors.request.use(
 );
 
 Api.interceptors.response.use(undefined, (error) => {
-	console.log('depos');
+
+	if(error && error.message.includes('401'))
+	{
+		navigate('/login');
+		window.location.reload(false);
+	}
+
 	return Promise.reject(error);
 });
 

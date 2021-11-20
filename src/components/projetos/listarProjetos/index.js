@@ -70,7 +70,7 @@ function ListarProjetos(props) {
                     animation="border"
                     role="status" />
             </div>
-            <div class="nav-pills-fox-container">
+            <div className="nav-pills-fox-container">
                 <Nav defaultActiveKey="#1" variant="tabs" className="nav-pills-fox">
                     <Nav.Item>
                         <Nav.Link href="#1" onClick={() => SelecionaStatusProjeto('em-andamento')}>Em andamento {habilitaEmAndamento && `(` + countProjetos + `)`}</Nav.Link>
@@ -84,23 +84,23 @@ function ListarProjetos(props) {
                 </Nav>
                 <hr />
             </div>
-            <div class="list-of-projects">
+            <div className="list-of-projects">
                 {
                     projetos.map((projeto, index) => {
                         return (
-                            <div class="box-project">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card-fox card-project">
-                                            <div class="info">
+                            <div className="box-project" key={index}>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="card-fox card-project">
+                                            <div className="info">
                                                 <p>Informações</p>
                                             </div>
-                                            <div class="content">
+                                            <div className="content">
                                                 <h3>{projeto.nome}</h3>
                                                 <p><b>Cliente:</b> {projeto.cliente}</p>
                                                 <p><b>Previsão de entrega:</b>  <Moment locale="pt-br" format="DD-MM-YYYY">{projeto.data_previsao_entrega}</Moment></p>
-                                                <p class="text-end">
-                                                    <a class="btn btn-fox-dynamic" href={`/admin/projetos/timeline/${projeto.id}`}><FontAwesomeIcon icon="long-arrow-alt-right" /> Ver Projeto</a>
+                                                <p className="text-end">
+                                                    <a className="btn btn-fox-dynamic" href={`/admin/projetos/timeline/${projeto.id}`}><FontAwesomeIcon icon="long-arrow-alt-right" /> Ver Projeto</a>
                                                 </p>
                                             </div>
                                         </div>

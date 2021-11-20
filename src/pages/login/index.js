@@ -6,10 +6,17 @@ import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import api from '../../api';
+import axios from 'axios';
 import * as yup from 'yup';
 import { navigate } from 'hookrouter';
 
 function Login() {
+
+    const baseURL = 'https://api-gerenciador-projetos-tcc.herokuapp.com/';
+
+    const Api = axios.create({
+        baseURL: baseURL,
+    });
 
     localStorage.removeItem('token');
 
@@ -28,7 +35,7 @@ function Login() {
 
         setSpinner(true);
 
-        await api.post('api/auth/login', values)
+        await Api.post('api/auth/login', values)
             .then(response => {
                 localStorage.setItem('token', response.data.token);
                 CarregarUsuario();
@@ -54,18 +61,13 @@ function Login() {
             });
     }
 
-    async function Health() {
-        await api.get('api/token');
-    }
-
     useEffect(() => {
         setSpinner(false);
-        Health();
     }, [spinner]);
 
     return (
         <>
-            <div class="login">
+            <div className="login">
                 {spinner && <div id="loader"></div>}
 
                 <Formik
@@ -82,14 +84,14 @@ function Login() {
                         errors
                     }) => (
                         <Form onSubmit={handleSubmit} noValidate>
-                            <div id="login" class="position-absolute top-50 start-50 translate-middle">
-                                <div class="logo">
+                            <div id="login" className="position-absolute top-50 start-50 translate-middle">
+                                <div className="logo">
                                     <a href="#">
                                         <FontAwesomeIcon icon="check-square" /> Status Projetos
                                     </a>
                                 </div>
 
-                                <div class="wrapper-login">
+                                <div className="wrapper-login">
                                     <Form.Control
                                         name="username"
                                         type="email"

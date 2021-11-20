@@ -1,5 +1,5 @@
 import Timeline from "../../../../components/projetos/timeline";
-import { Container, Row, Col, Spinner, Form } from 'react-bootstrap';
+import { Container, Row, Col, Spinner, Form, Modal, Button } from 'react-bootstrap';
 import Header from '../../../../components/header';
 import Footer from '../../../../components/footer';
 import Wrapper from '../../../../components/wrapper';
@@ -24,7 +24,10 @@ function ListarTimeline(referencia) {
     const [showModal, setShowModal] = useState(false);
     const [textModal, setTextModal] = useState(null);
     const [titleModal, setTitleModal] = useState(null);
-    const handleCloseModal = () => setShowModal(false);
+    const handleCloseModal = () => {
+        setShowModal(false);
+        window.location.reload();
+    };
 
     useEffect(() => {
         setSpinner(true);
@@ -33,7 +36,6 @@ function ListarTimeline(referencia) {
             await api.get('v1/api/projects/' + referencia.id)
                 .then(response => {
                     setProjeto(response.data);
-                    console.log(projeto);
                     setSpinner(false);
                 })
                 .catch(error => {
@@ -116,10 +118,10 @@ function ListarTimeline(referencia) {
                     <Row>
                         <Col md={2}>
                             <a href={`/admin/projetos/editar/${projeto.id}`}>
-                                <div class="card-fox-gray">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p class="text-center">
+                                <div className="card-fox-gray">
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <p className="text-center">
                                                 <FontAwesomeIcon icon="cog" /><br />
                                                 Editar
                                             </p>
@@ -130,12 +132,12 @@ function ListarTimeline(referencia) {
                         </Col>
 
                         <Col md={8}>
-                            <div class="card-fox">
-                                <div class="row">
-                                    <div class="col-md-6">
+                            <div className="card-fox">
+                                <div className="row">
+                                    <div className="col-md-6">
                                         <p><b>Cliente:</b> <br /> {projeto.cliente}</p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div className="col-md-6">
                                         <p><b>Data prevista de conclusão:</b> <br /> <Moment locale="pt-br" format="DD-MM-YYYY">{projeto.data_previsao_entrega}</Moment></p>
                                     </div>
                                 </div>
@@ -144,10 +146,10 @@ function ListarTimeline(referencia) {
 
                         <Col md={2}>
                             <a href={`/admin/projetos/notificacao/${projeto.id}`}>
-                                <div class="card-fox-gray">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p class="text-center">
+                                <div className="card-fox-gray">
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <p className="text-center">
                                                 <FontAwesomeIcon icon="bell" /><br />
                                                 Alerta
                                             </p>
@@ -162,7 +164,7 @@ function ListarTimeline(referencia) {
 
                     <Row className="justify-content-md-center">
                         <Col md={8}>
-                            <div class="card-fox">
+                            <div className="card-fox">
                                 <Formik
                                     onSubmit={async (values, { resetForm }) => IncluirTimeline(values, { resetForm })}
                                     initialValues={{
@@ -200,7 +202,7 @@ function ListarTimeline(referencia) {
                                             <Row>
                                                 <Col md={12}>
                                                     <Select
-                                                        class="form-control select2-basic-icon"
+                                                        className="form-control select2-basic-icon"
                                                         placeholder={'Selecione uma marcação'}
                                                         onChange={selectedOption => {
                                                             handleChange({ target: { name: 'status_id', value: selectedOption.value } })
@@ -243,7 +245,7 @@ function ListarTimeline(referencia) {
                                             <br />
                                             <Row>
                                                 <Col md={6}>
-                                                    <p class="text-left no-margin-lr">
+                                                    <div className="text-left no-margin-lr">
                                                         <Form.Check
                                                             type="switch"
                                                             label="Alertar?"
@@ -251,12 +253,12 @@ function ListarTimeline(referencia) {
                                                             onChange={handleChange}
                                                             defaultChecked={true}
                                                             value={values.alertar} />
-                                                    </p>
+                                                    </div>
                                                 </Col>
                                                 <Col md={6}>
-                                                    <p class="text-end">
-                                                        <button type="submit" class="btn btn-fox-dynamic">
-                                                            <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Publicar
+                                                    <p className="text-end">
+                                                        <button type="submit" className="btn btn-fox-dynamic">
+                                                            <i className="fas fa-cloud-upload-alt" aria-hidden="true"></i> Publicar
                                                         </button>
                                                     </p>
                                                 </Col>
@@ -270,10 +272,23 @@ function ListarTimeline(referencia) {
 
                     <Row>
                         <Col md={12}>
-                            <Timeline />
+                            {projeto.id && <Timeline projeto_id={projeto.id} />}
                         </Col>
                     </Row>
                 </Container>
+                <Modal show={showModal} onHide={handleCloseModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{titleModal}</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <p>{textModal}</p>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseModal}>Fechar</Button>
+                    </Modal.Footer>
+                </Modal>
             </Wrapper>
             <Footer />
         </>

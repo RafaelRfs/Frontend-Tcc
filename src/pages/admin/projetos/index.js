@@ -24,7 +24,7 @@ function Projetos() {
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <div class="card-fox">
+                            <div className="card-fox">
                                 <a href="/admin/projetos/cadastrar"><FontAwesomeIcon icon="plus" /> Novo Projeto</a>
                             </div>
                         </Col>

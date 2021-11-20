@@ -32,7 +32,6 @@ function EditarUsuario() {
             await api.get('v1/api/users')
                 .then(response => {
                     setUsuario(response.data);
-                    console.log(usuario);
                     setSpinner(false);
                 })
                 .catch(error => {
@@ -85,14 +84,14 @@ function EditarUsuario() {
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <div class="card-fox">
+                            <div className="card-fox">
                                 <Formik
                                     enableReinitialize
                                     onSubmit={async (values, { resetForm }) => AtualizarUsuario(values, { resetForm })}
                                     initialValues={{
-                                        user_id: usuario.id,
-                                        nome: usuario.nome,
-                                        email: usuario.email,
+                                        user_id: usuario.id || '',
+                                        nome: usuario.nome || '',
+                                        email: usuario.email || '',
                                         senha: '',
                                         nova_senha: '',
                                         confirmacao_nova_senha: ''
