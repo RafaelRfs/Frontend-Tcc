@@ -21,8 +21,8 @@ function EditarUsuario() {
         nome: yup.string().required().min(3),
         email: yup.string().email().required().min(3),
         senha: yup.string().required().min(3),
-        nova_senha: yup.string().required().min(3),
-        confirmacao_nova_senha: yup.string().required().oneOf([yup.ref('nova_senha'), null], 'a senha não confere.'),
+        nova_senha: yup.string().min(3),
+        confirmacao_nova_senha: yup.string().oneOf([yup.ref('nova_senha'), null], 'a senha não confere.'),
     });
 
     useEffect(() => {
