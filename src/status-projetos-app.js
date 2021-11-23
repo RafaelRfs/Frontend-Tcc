@@ -1,7 +1,6 @@
 import './status-projetos-app.css';
 import { useRoutes, navigate } from 'hookrouter';
 import Login from './pages/login';
-import Home from './pages/home';
 import Dashboard from './pages/admin/dashboard'
 import Projetos from './pages/admin/projetos'
 import CadastrarProjeto from './pages/admin/projetos/cadastrar'
@@ -9,9 +8,13 @@ import EditarProjeto from './pages/admin/projetos/editar'
 import ListarTimeline from './pages/admin/projetos/timeline';
 import GerenciarNotificacoes from './pages/admin/projetos/notificacao';
 import EditarUsuario from './pages/admin/usuario/editar';
+import TimelinePublica from './pages/public/timeline';
+import ProjetosPublicos from './pages/public/projetos';
 
 const routes = {
-  '/': () => <Login />,
+  '/': () => <ProjetosPublicos />,
+  '/projetos': () => <ProjetosPublicos />,
+  '/timeline/:id': ({id}) => <TimelinePublica id={id} />,
   '/login': () => <Login />,
   '/admin/*': () => <AuthedPages />,
 }
@@ -33,7 +36,9 @@ function AuthedPages() {
     '/admin/usuario/editar': () => <EditarUsuario />
   };
 
-  if (!localStorage.getItem('token')) {
+  console.log(window.location.href);
+
+  if (window.location.href.includes('admin') && !localStorage.getItem('token')) {
     navigate('/login');
   }
 

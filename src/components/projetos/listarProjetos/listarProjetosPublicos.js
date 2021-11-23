@@ -19,17 +19,27 @@ function ListarProjetos(props) {
     const [habilitaConcluido, setHabilitaConcluido] = useState(false);
 
     async function CarregarProjetos(status) {
-        await api.get('v1/api/projects/by-status/' + status)
-            .then(response => {
-                setProjetos(response.data);
-                setCountProjetos(response.data.length);
-                setSpinner(false);
-            })
-            .catch(error => {
-                setSpinner(false);
-                setProjetos([]);
-                console.error(error);
-            });
+        // await api.get('v1/api/projects/by-status/' + status)
+        //     .then(response => {
+        //         setProjetos(response.data);
+        //         setCountProjetos(response.data.length);
+        //         setSpinner(false);
+        //     })
+        //     .catch(error => {
+        //         setSpinner(false);
+        //         setProjetos([]);
+        //         console.error(error);
+        //     });
+
+        setProjetos([
+            {
+                'id': '3',
+                'nome': 'projeto',
+                'segmento': 'Saúde'
+            }
+        ]);
+
+        setSpinner(false);
     }
 
     function SelecionaStatusProjeto(status) {
@@ -99,9 +109,9 @@ function ListarProjetos(props) {
                                                 <h3>{projeto.nome}</h3>
                                                 <p><b>Cliente:</b> {projeto.cliente}</p>
                                                 <p><b>Previsão de entrega:</b>  <Moment locale="pt-br" format="DD-MM-YYYY">{projeto.data_previsao_entrega}</Moment></p>
-                                                {/* <p><span className="segmento">{projeto.segmento}</span> </p> */}
+                                                <p><span className="segmento">{projeto.segmento}</span> </p>
                                                 <p className="text-end">
-                                                    <a className="btn btn-fox-dynamic" href={`/admin/projetos/timeline/${projeto.id}`}><FontAwesomeIcon icon="long-arrow-alt-right" /> Ver Projeto</a>
+                                                    <a className="btn btn-fox-dynamic" href={`/timeline/${projeto.id}`}><FontAwesomeIcon icon="long-arrow-alt-right" /> Ver Projeto</a>
                                                 </p>
                                             </div>
                                         </div>
