@@ -18,7 +18,9 @@ library.add(faCog, faBell);
 function ListarTimeline(referencia) {
 
     const [spinner, setSpinner] = useState(true);
-    const [projeto, setProjeto] = useState({});
+    const [projeto, setProjeto] = useState({
+        segmento: {}
+    });
     const [status, setStatus] = useState([]);
 
     const [showModal, setShowModal] = useState(false);
@@ -135,7 +137,7 @@ function ListarTimeline(referencia) {
                             <div className="card-fox">
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <p><b>Cliente:</b> <br /> {projeto.cliente}</p>
+                                        <p><span className="segmento">{projeto.segmento.nome}</span> </p>
                                     </div>
                                     <div className="col-md-6">
                                         <p><b>Data prevista de conclusão:</b> <br /> <Moment locale="pt-br" format="DD-MM-YYYY">{projeto.data_previsao_entrega}</Moment></p>

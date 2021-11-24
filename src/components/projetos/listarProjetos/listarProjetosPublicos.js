@@ -20,7 +20,7 @@ function ListarProjetos(props) {
     const [habilitaConcluido, setHabilitaConcluido] = useState(false);
 
     async function CarregarProjetos(status) {
-        await api.get('v1/api/projects/by-status/' + status)
+        await api.get('v1/api/projects/public/by-status/' + status)
             .then(response => {
                 setProjetos(response.data);
                 setCountProjetos(response.data.length);
@@ -31,6 +31,8 @@ function ListarProjetos(props) {
                 setProjetos([]);
                 console.error(error);
             });
+
+        setSpinner(false);
     }
 
     function SelecionaStatusProjeto(status) {
@@ -101,7 +103,7 @@ function ListarProjetos(props) {
                                                 <p><b>Previsão de entrega:</b>  <Moment locale="pt-br" format="LL">{projeto.data_previsao_entrega}</Moment></p>
                                                 <p><span className="segmento">{projeto.segmento.nome}</span> </p>
                                                 <p className="text-end">
-                                                    <a className="btn btn-fox-dynamic" href={`/admin/projetos/timeline/${projeto.id}`}><FontAwesomeIcon icon="long-arrow-alt-right" /> Ver Projeto</a>
+                                                    <a className="btn btn-fox-dynamic" href={`/timeline/${projeto.id}`}><FontAwesomeIcon icon="long-arrow-alt-right" /> Ver Projeto</a>
                                                 </p>
                                             </div>
                                         </div>

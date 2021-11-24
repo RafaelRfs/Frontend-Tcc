@@ -343,3 +343,12 @@ form {
     border: solid 1px red;
     border-radius: 5px;
 }
+
+span.segmento {
+    @extend .background-fox-animado;
+    padding: 5px;
+    color: #FFF;
+    font-weight: 600;
+    margin-top: 4px;
+    display: inline-block;
+}
