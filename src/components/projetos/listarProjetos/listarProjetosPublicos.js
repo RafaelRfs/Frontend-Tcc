@@ -19,17 +19,17 @@ function ListarProjetos(props) {
     const [habilitaConcluido, setHabilitaConcluido] = useState(false);
 
     async function CarregarProjetos(status) {
-        // await api.get('v1/api/projects/by-status/' + status)
-        //     .then(response => {
-        //         setProjetos(response.data);
-        //         setCountProjetos(response.data.length);
-        //         setSpinner(false);
-        //     })
-        //     .catch(error => {
-        //         setSpinner(false);
-        //         setProjetos([]);
-        //         console.error(error);
-        //     });
+        await api.get('v1/api/projects/by-status/' + status)
+            .then(response => {
+                setProjetos(response.data);
+                setCountProjetos(response.data.length);
+                setSpinner(false);
+            })
+            .catch(error => {
+                setSpinner(false);
+                setProjetos([]);
+                console.error(error);
+            });
 
         setProjetos([
             {

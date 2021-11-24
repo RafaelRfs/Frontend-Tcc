@@ -9,6 +9,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import * as yup from 'yup';
 import api from '../../../../api';
 import { Formik } from 'formik';
+import Select, { Option, ReactSelectProps } from 'react-select'
 
 library.add(faPlus);
 
@@ -16,12 +17,14 @@ function EditarProjeto(referencia) {
 
     const [spinner, setSpinner] = useState(false);
     const [projeto, setProjeto] = useState({
-        'nome': '',
-        'cliente': '',
-        'data_previsao_entrega': ''
+        nome: '',
+        cliente: '',
+        data_previsao_entrega: '',
+        segmento: {}
     });
 
     const [showModal, setShowModal] = useState(false);
+    const [segmentos, setSegmentos] = useState([]);
     const [textModal, setTextModal] = useState(null);
     const [titleModal, setTitleModal] = useState(null);
     const handleCloseModal = () => setShowModal(false);
@@ -31,7 +34,7 @@ function EditarProjeto(referencia) {
 
     const schema = yup.object({
         nome: yup.string().required().min(3),
-        cliente: yup.string().required().min(3),
+        segmento: yup.string().required().ensure(),
         data_previsao_entrega: yup.date().required().min(dateValidation, 'A data deve estar no futruro.')
     });
 
@@ -50,8 +53,27 @@ function EditarProjeto(referencia) {
                 });
         }
 
-        CarregarProjeto(referencia.id);
-    }, []);
+        async function ListarStatus() {
+            await api.get('v1/api/segments')
+                .then(response => {
+                    let options = response.data.map((s) => {
+                        return {
+                            label: s.nome,
+                            value: s.codigo
+                        }
+                    });
+                    setSegmentos(options);
+                    setSpinner(false);
+                    CarregarProjeto(referencia.id);
+                })
+                .catch(error => {
+                    setSpinner(false);
+                    console.error(error);
+                });
+        }
+
+        ListarStatus();
+    }, [projeto.segmento.codigo]);
 
     async function AtualizarProjeto(values, { resetForm }) {
 
@@ -100,12 +122,13 @@ function EditarProjeto(referencia) {
                                     initialValues={{
                                         id: projeto.id || '',
                                         nome: projeto.nome || '',
-                                        cliente: projeto.cliente || '',
-                                        data_previsao_entrega: projeto.data_previsao_entrega || ''
+                                        data_previsao_entrega: projeto.data_previsao_entrega || '',
+                                        segmento: segmentos[projeto.segmento.codigo]
                                     }} validationSchema={schema}>
                                     {({
                                         handleSubmit,
                                         handleChange,
+                                        handleBlur,
                                         values,
                                         touched,
                                         errors
@@ -124,15 +147,23 @@ function EditarProjeto(referencia) {
                                                         isInvalid={touched.nome && !!errors.nome} />
                                                 </Col>
                                                 <Col md={6}>
-                                                    <Form.Control
-                                                        name="cliente"
-                                                        type="text"
-                                                        placeholder="Cliente"
-                                                        autoComplete="off"
-                                                        value={values.cliente}
-                                                        onChange={handleChange}
-                                                        isValid={touched.cliente && !errors.cliente}
-                                                        isInvalid={touched.cliente && !!errors.cliente} />
+                                                    {
+                                                        projeto.segmento.codigo && <Select
+                                                            name="segmento"
+                                                            className="form-control select2-basic-icon"
+                                                            placeholder={'Selecione um segmento'}
+                                                            onChange={selectedOption => {
+                                                                handleChange({ target: { name: 'segmento', value: selectedOption.value } })
+                                                            }}
+                                                            onBlur={selectedOption => {
+                                                                handleBlur({ target: { name: 'segmento', value: selectedOption.value } });
+                                                            }}
+                                                            options={segmentos}
+                                                            defaultValue={segmentos[segmentos.findIndex(x => x.value === projeto.segmento.codigo)]}
+                                                            isValid={touched.segmento && !errors.segmento}
+                                                            isInvalid={touched.segmento && !!errors.segmento}
+                                                            className={touched.segmento && !!errors.segmento && 'select-error'} />
+                                                    }
                                                 </Col>
                                             </Row>
                                             <br />

@@ -9,6 +9,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import api from '../../../../api';
+import Select, { Option, ReactSelectProps } from 'react-select'
 
 library.add(faPlus);
 
@@ -17,6 +18,7 @@ function CadastrarProjeto() {
     const [spinner, setSpinner] = useState(false);
 
     const [showModal, setShowModal] = useState(false);
+    const [segmentos, setSegmentos] = useState([]);
     const [textModal, setTextModal] = useState(null);
     const [titleModal, setTitleModal] = useState(null);
     const handleCloseModal = () => setShowModal(false);
@@ -26,9 +28,32 @@ function CadastrarProjeto() {
 
     const schema = yup.object({
         nome: yup.string().required().min(3),
-        cliente: yup.string().required().min(3),
+        segmento_id: yup.string().required().ensure(),
         data_previsao_entrega: yup.date().required().min(dateValidation, 'A data deve estar no futruro.')
     });
+
+    useEffect(() => {
+
+        async function ListarStatus() {
+            await api.get('v1/api/segments')
+                .then(response => {
+                    let options = response.data.map((s) => {
+                        return {
+                            label: s.nome,
+                            value: s.codigo
+                        }
+                    });
+                    setSegmentos(options);
+                    setSpinner(false);
+                })
+                .catch(error => {
+                    setSpinner(false);
+                    console.error(error);
+                });
+        }
+
+        ListarStatus();
+    }, []);
 
     async function NovoProjeto(values, { resetForm }) {
 
@@ -76,12 +101,13 @@ function CadastrarProjeto() {
                                     onSubmit={async (values, { resetForm }) => NovoProjeto(values, { resetForm })}
                                     initialValues={{
                                         nome: '',
-                                        cliente: '',
+                                        segmento_id: '',
                                         data_previsao_entrega: ''
                                     }} validationSchema={schema}>
                                     {({
                                         handleSubmit,
                                         handleChange,
+                                        handleBlur,
                                         values,
                                         touched,
                                         errors
@@ -100,15 +126,20 @@ function CadastrarProjeto() {
                                                         isInvalid={touched.nome && !!errors.nome} />
                                                 </Col>
                                                 <Col md={6}>
-                                                    <Form.Control
-                                                        name="cliente"
-                                                        type="text"
-                                                        placeholder="Cliente"
-                                                        autoComplete="off"
-                                                        value={values.cliente}
-                                                        onChange={handleChange}
-                                                        isValid={touched.cliente && !errors.cliente}
-                                                        isInvalid={touched.cliente && !!errors.cliente} />
+                                                    <Select
+                                                        className="form-control select2-basic-icon"
+                                                        placeholder={'Selecione um segmento'}
+                                                        onChange={selectedOption => {
+                                                            handleChange({ target: { name: 'segmento_id', value: selectedOption.value } })
+                                                        }}
+                                                        onBlur={selectedOption => {
+                                                            handleBlur({ target: { name: 'segmento_id', value: selectedOption.value } });
+                                                        }}
+                                                        options={segmentos}
+                                                        defaultValue={segmentos[0]}
+                                                        isValid={touched.segmento_id && !errors.segmento_id}
+                                                        isInvalid={touched.segmento_id && !!errors.segmento_id}
+                                                        className={touched.segmento_id && !!errors.segmento_id && 'select-error'} />
                                                 </Col>
                                             </Row>
                                             <br />

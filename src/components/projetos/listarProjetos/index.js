@@ -97,9 +97,8 @@ function ListarProjetos(props) {
                                             </div>
                                             <div className="content">
                                                 <h3>{projeto.nome}</h3>
-                                                <p><b>Cliente:</b> {projeto.cliente}</p>
                                                 <p><b>Previsão de entrega:</b>  <Moment locale="pt-br" format="DD-MM-YYYY">{projeto.data_previsao_entrega}</Moment></p>
-                                                {/* <p><span className="segmento">{projeto.segmento}</span> </p> */}
+                                                <p><span className="segmento">{projeto.segmento.nome}</span> </p>
                                                 <p className="text-end">
                                                     <a className="btn btn-fox-dynamic" href={`/admin/projetos/timeline/${projeto.id}`}><FontAwesomeIcon icon="long-arrow-alt-right" /> Ver Projeto</a>
                                                 </p>
