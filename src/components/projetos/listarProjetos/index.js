@@ -14,8 +14,8 @@ function ListarProjetos(props) {
     const [projetos, setProjetos] = useState([]);
     const [countProjetos, setCountProjetos] = useState(0);
 
-    const [habilitaEmAndamento, setHabilitaEmAndamento] = useState(true);
-    const [habilitaAguardandoCliente, setHabilitaAguardandoCliente] = useState(false);
+    const [habilitaEmAprovacao, setHabilitaEmAprovacao] = useState(true);
+    const [habilitaEmAndamento, setHabilitaEmAndamento] = useState(false);
     const [habilitaConcluido, setHabilitaConcluido] = useState(false);
 
     async function CarregarProjetos(status) {
@@ -36,29 +36,29 @@ function ListarProjetos(props) {
 
         setSpinner(true);
 
+        setHabilitaEmAprovacao(false);
         setHabilitaEmAndamento(false);
-        setHabilitaAguardandoCliente(false);
         setHabilitaConcluido(false);
 
         switch (status) {
+            case 'em-aprovacao':
+                setHabilitaEmAprovacao(true);
+                CarregarProjetos('EM_APROVACAO');
+                break;
             case 'em-andamento':
                 setHabilitaEmAndamento(true);
                 CarregarProjetos('EM_ANDAMENTO');
                 break;
-            case 'aguardando-cliente':
-                setHabilitaAguardandoCliente(true);
-                CarregarProjetos('AGUARDANDO_CLIENTE');
-                break;
             case 'concluido':
                 setHabilitaConcluido(true);
-                CarregarProjetos('FINALIZADO');
+                CarregarProjetos('CONCLUIDO');
                 break;
         }
     }
 
     useEffect(() => {
         setSpinner(true);
-        CarregarProjetos('EM_ANDAMENTO');
+        CarregarProjetos('EM_APROVACAO');
     }, []);
 
     return (
@@ -73,10 +73,10 @@ function ListarProjetos(props) {
             <div className="nav-pills-fox-container">
                 <Nav defaultActiveKey="#1" variant="tabs" className="nav-pills-fox">
                     <Nav.Item>
-                        <Nav.Link href="#1" onClick={() => SelecionaStatusProjeto('em-andamento')}>Em andamento {habilitaEmAndamento && `(` + countProjetos + `)`}</Nav.Link>
+                        <Nav.Link href="#1" onClick={() => SelecionaStatusProjeto('em-aprovacao')}>Em aprovação {habilitaEmAprovacao && `(` + countProjetos + `)`}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="#2" onClick={() => SelecionaStatusProjeto('aguardando-cliente')}>Aguardando o cliente {habilitaAguardandoCliente && `(` + countProjetos + `)`}</Nav.Link>
+                        <Nav.Link href="#2" onClick={() => SelecionaStatusProjeto('em-andamento')}>Em andamento {habilitaEmAndamento && `(` + countProjetos + `)`}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link href="#3" onClick={() => SelecionaStatusProjeto('concluido')}>Finalizados {habilitaConcluido && `(` + countProjetos + `)`}</Nav.Link>

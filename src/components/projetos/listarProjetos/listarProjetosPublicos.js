@@ -14,12 +14,12 @@ function ListarProjetos(props) {
     const [projetos, setProjetos] = useState([]);
     const [countProjetos, setCountProjetos] = useState(0);
 
-    const [habilitaEmAndamento, setHabilitaEmAndamento] = useState(true);
-    const [habilitaAguardandoCliente, setHabilitaAguardandoCliente] = useState(false);
+    const [habilitaEmAprovacao, setHabilitaEmAprovacao] = useState(true);
+    const [habilitaEmAndamento, setHabilitaEmAndamento] = useState(false);
     const [habilitaConcluido, setHabilitaConcluido] = useState(false);
 
     async function CarregarProjetos(status) {
-        await api.get('v1/api/projects/by-status/' + status)
+        await api.get('v1/api/projects/public')
             .then(response => {
                 setProjetos(response.data);
                 setCountProjetos(response.data.length);
@@ -31,14 +31,6 @@ function ListarProjetos(props) {
                 console.error(error);
             });
 
-        setProjetos([
-            {
-                'id': '3',
-                'nome': 'projeto',
-                'segmento': 'Saúde'
-            }
-        ]);
-
         setSpinner(false);
     }
 
@@ -46,29 +38,29 @@ function ListarProjetos(props) {
 
         setSpinner(true);
 
+        setHabilitaEmAprovacao(false);
         setHabilitaEmAndamento(false);
-        setHabilitaAguardandoCliente(false);
         setHabilitaConcluido(false);
 
         switch (status) {
+            case 'em-aprovacao':
+                setHabilitaEmAprovacao(true);
+                CarregarProjetos('EM_APROVACAO');
+                break;
             case 'em-andamento':
                 setHabilitaEmAndamento(true);
                 CarregarProjetos('EM_ANDAMENTO');
                 break;
-            case 'aguardando-cliente':
-                setHabilitaAguardandoCliente(true);
-                CarregarProjetos('AGUARDANDO_CLIENTE');
-                break;
             case 'concluido':
                 setHabilitaConcluido(true);
-                CarregarProjetos('FINALIZADO');
+                CarregarProjetos('CONCLUIDO');
                 break;
         }
     }
 
     useEffect(() => {
         setSpinner(true);
-        CarregarProjetos('EM_ANDAMENTO');
+        CarregarProjetos('EM_APROVACAO');
     }, []);
 
     return (
@@ -83,10 +75,10 @@ function ListarProjetos(props) {
             <div className="nav-pills-fox-container">
                 <Nav defaultActiveKey="#1" variant="tabs" className="nav-pills-fox">
                     <Nav.Item>
-                        <Nav.Link href="#1" onClick={() => SelecionaStatusProjeto('em-andamento')}>Em andamento {habilitaEmAndamento && `(` + countProjetos + `)`}</Nav.Link>
+                        <Nav.Link href="#1" onClick={() => SelecionaStatusProjeto('em-aprovacao')}>Em aprovação {habilitaEmAprovacao && `(` + countProjetos + `)`}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="#2" onClick={() => SelecionaStatusProjeto('aguardando-cliente')}>Aguardando o cliente {habilitaAguardandoCliente && `(` + countProjetos + `)`}</Nav.Link>
+                        <Nav.Link href="#2" onClick={() => SelecionaStatusProjeto('em-andamento')}>Em andamento {habilitaEmAndamento && `(` + countProjetos + `)`}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link href="#3" onClick={() => SelecionaStatusProjeto('concluido')}>Finalizados {habilitaConcluido && `(` + countProjetos + `)`}</Nav.Link>
@@ -107,9 +99,8 @@ function ListarProjetos(props) {
                                             </div>
                                             <div className="content">
                                                 <h3>{projeto.nome}</h3>
-                                                <p><b>Cliente:</b> {projeto.cliente}</p>
                                                 <p><b>Previsão de entrega:</b>  <Moment locale="pt-br" format="DD-MM-YYYY">{projeto.data_previsao_entrega}</Moment></p>
-                                                <p><span className="segmento">{projeto.segmento}</span> </p>
+                                                <p><span className="segmento">{projeto.segmento.nome}</span> </p>
                                                 <p className="text-end">
                                                     <a className="btn btn-fox-dynamic" href={`/timeline/${projeto.id}`}><FontAwesomeIcon icon="long-arrow-alt-right" /> Ver Projeto</a>
                                                 </p>

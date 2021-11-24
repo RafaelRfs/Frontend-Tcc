@@ -1,4 +1,4 @@
-import Timeline from "../../../components/projetos/timeline";
+import ListarTimelinePublica from "../../../components/projetos/timeline/timelinePublica";
 import { Container, Row, Col, Spinner, Form, Modal, Button } from 'react-bootstrap';
 import HeaderPublico from '../../../components/header/headerPublico';
 import Footer from '../../../components/footer';
@@ -36,16 +36,17 @@ function TimelinePublica(referencia) {
         setSpinner(true);
 
         async function DetalhesProjeto() {
-            // await api.get('v1/api/projects/' + referencia.id)
-            //     .then(response => {
-            //         setProjeto(response.data);
-            //         setSpinner(false);
-            //     })
-            //     .catch(error => {
-            //         setSpinner(false);
-            //         console.error(error);
-            //     });
+            //     await api.get('v1/api/projects/' + referencia.id)
+            //         .then(response => {
+            //             setProjeto(response.data);
+            //             setSpinner(false);
+            //         })
+            //         .catch(error => {
+            //             setSpinner(false);
+            //             console.error(error);
+            //         });
 
+            setProjeto({'id': '334'});
             setSpinner(false);
         }
 
@@ -119,7 +120,7 @@ function TimelinePublica(referencia) {
                     <br />
                     <Row>
                         <Col md={12}>
-                            {projeto.id && <Timeline projeto_id={projeto.id} />}
+                            {projeto.id && <ListarTimelinePublica projeto_id={projeto.id} />}
                         </Col>
                     </Row>
                 </Container>
