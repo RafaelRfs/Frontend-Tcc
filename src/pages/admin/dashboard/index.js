@@ -5,9 +5,9 @@ import './dashboard.scss';
 import { Container, Row, Col, Card } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBriefcase, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBriefcase, faChartPie, faUser } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faBriefcase, faUser);
+library.add(faBriefcase, faUser, faChartPie);
 
 function Dashboard() {
     return (
@@ -50,7 +50,20 @@ function Dashboard() {
                                 </a>
                             </Card>
                         </Col>
-                        <Col md={4}></Col>
+                        <Col md={4}>
+                            <Card className="panel panel-default painel-dashboard-fox">
+                                <a href="/admin/relatorios/segmento">
+                                    <Card.Body className="panel-body">
+                                        <div className="icon">
+                                            <FontAwesomeIcon icon="chart-pie" />
+                                        </div>
+                                        <div className="text">
+                                            Relatórios
+                                        </div>
+                                    </Card.Body>
+                                </a>
+                            </Card>
+                        </Col>
                     </Row>
                 </Container>
             </Wrapper>

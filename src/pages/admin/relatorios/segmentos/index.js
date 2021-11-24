@@ -1,7 +1,7 @@
 import { ResponsivePie } from '@nivo/pie'
 import Header from '../../../../components/header';
 import Wrapper from '../../../../components/wrapper';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import Footer from '../../../../components/footer';
 import api from '../../../../api';
 import { useState, useEffect } from 'react';
@@ -38,6 +38,13 @@ function RelatorioSegmentos() {
 
     return (
         <>
+            <div className="container-spinner" hidden={!spinner}>
+                <Spinner
+                    id="custom-spinner"
+                    style={{ 'position': 'absolute', 'top': '50%', 'left': '50%' }}
+                    animation="border"
+                    role="status" />
+            </div>
             <Header />
             <Wrapper>
                 <Container>
