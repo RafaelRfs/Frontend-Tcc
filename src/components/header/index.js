@@ -20,7 +20,9 @@ function Header() {
     return (
         <Navbar className="navbar navbar-inverse navbar-fixed-top nav-fox">
             <Container fluid>
-                <Navbar.Brand className="logo-foxaccount" href="/admin/dashboard"><FontAwesomeIcon icon="check-square" /> Status Projetos</Navbar.Brand>
+                <Navbar.Brand className="logo-foxaccount" href="/admin/dashboard" style={{'width': '500px'}}>
+                    <FontAwesomeIcon icon="check-square" /> Módulo de Gestão Estratégica de Projetos
+                </Navbar.Brand>
 
                 <Nav className="navbar-collapse collapse">
                     <Nav.Link className="navbar-link-fox" href="/admin/dashboard">Dashboard</Nav.Link>
