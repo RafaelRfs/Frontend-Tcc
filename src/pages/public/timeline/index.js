@@ -6,6 +6,7 @@ import Wrapper from '../../../components/wrapper';
 import { useState, useEffect } from 'react';
 import api from '../../../api';
 import Moment from 'react-moment';
+import 'moment/locale/pt-br';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCog, faBell } from "@fortawesome/free-solid-svg-icons";
@@ -36,17 +37,16 @@ function TimelinePublica(referencia) {
         setSpinner(true);
 
         async function DetalhesProjeto() {
-            //     await api.get('v1/api/projects/' + referencia.id)
-            //         .then(response => {
-            //             setProjeto(response.data);
-            //             setSpinner(false);
-            //         })
-            //         .catch(error => {
-            //             setSpinner(false);
-            //             console.error(error);
-            //         });
+                await api.get('v1/api/projects/' + referencia.id)
+                    .then(response => {
+                        setProjeto(response.data);
+                        setSpinner(false);
+                    })
+                    .catch(error => {
+                        setSpinner(false);
+                        console.error(error);
+                    });
 
-            setProjeto({'id': '334'});
             setSpinner(false);
         }
 
@@ -91,12 +91,12 @@ function TimelinePublica(referencia) {
                             <div className="card-fox">
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <h4>Projeto de Saúde</h4>
-                                        <p><span className="segmento">Saúde</span> </p>
+                                        <h4>{projeto.nome}</h4>
+                                        <p><span className="segmento">{projeto.segmento.nome}</span> </p>
                                     </div>
                                     <div className="col-md-6">
-                                        <p><b>Data de Início:</b> <br /> {projeto.nome}</p>
-                                        <p><b>Data prevista de conclusão:</b> <Moment locale="pt-br" format="DD-MM-YYYY">{projeto.data_previsao_entrega}</Moment></p>
+                                        <p><b>Data de Início:</b> <Moment locale="pt-br" format="LL">{projeto.data_inicio_projeto}</Moment></p>
+                                        <p><b>Data prevista de conclusão:</b> <Moment locale="pt-br" format="LL">{projeto.data_previsao_entrega}</Moment></p>
                                     </div>
                                 </div>
                             </div>

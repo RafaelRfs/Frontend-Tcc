@@ -5,6 +5,7 @@ import Moment from 'react-moment';
 import { Nav, Spinner } from 'react-bootstrap';
 import api from '../../../api';
 import { useState, useEffect } from 'react';
+import 'moment/locale/pt-br';
 
 library.add(faLongArrowAltRight);
 
@@ -97,7 +98,7 @@ function ListarProjetos(props) {
                                             </div>
                                             <div className="content">
                                                 <h3>{projeto.nome}</h3>
-                                                <p><b>Previsão de entrega:</b>  <Moment locale="pt-br" format="DD-MM-YYYY">{projeto.data_previsao_entrega}</Moment></p>
+                                                <p><b>Previsão de entrega:</b>  <Moment locale="pt-br" format="LL">{projeto.data_previsao_entrega}</Moment></p>
                                                 <p><span className="segmento">{projeto.segmento.nome}</span> </p>
                                                 <p className="text-end">
                                                     <a className="btn btn-fox-dynamic" href={`/admin/projetos/timeline/${projeto.id}`}><FontAwesomeIcon icon="long-arrow-alt-right" /> Ver Projeto</a>
