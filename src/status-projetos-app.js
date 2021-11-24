@@ -1,10 +1,11 @@
 import './status-projetos-app.css';
 import { useRoutes, navigate } from 'hookrouter';
 import Login from './pages/login';
-import Dashboard from './pages/admin/dashboard'
-import Projetos from './pages/admin/projetos'
-import CadastrarProjeto from './pages/admin/projetos/cadastrar'
-import EditarProjeto from './pages/admin/projetos/editar'
+import Dashboard from './pages/admin/dashboard';
+import Projetos from './pages/admin/projetos';
+import RelatorioSegmentos from './pages/admin/relatorios/segmentos';
+import CadastrarProjeto from './pages/admin/projetos/cadastrar';
+import EditarProjeto from './pages/admin/projetos/editar';
 import ListarTimeline from './pages/admin/projetos/timeline';
 import GerenciarNotificacoes from './pages/admin/projetos/notificacao';
 import EditarUsuario from './pages/admin/usuario/editar';
@@ -28,6 +29,7 @@ function AuthedPages() {
 
   const authedRoutes = {
     '/admin/dashboard': () => <Dashboard />,
+    '/admin/relatorios/segmento': () => <RelatorioSegmentos />,
     '/admin/projetos': () => <Projetos />,
     '/admin/projetos/cadastrar': () => <CadastrarProjeto />,
     '/admin/projetos/editar/:id': ({id}) => <EditarProjeto id={id} />,
