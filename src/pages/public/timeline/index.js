@@ -16,7 +16,11 @@ import * as yup from 'yup';
 function TimelinePublica(referencia) {
 
     const [spinner, setSpinner] = useState(true);
-    const [projeto, setProjeto] = useState({});
+    const [projeto, setProjeto] = useState({
+        segmento: {
+            nome: ''
+        }
+    });
     const [status, setStatus] = useState([]);
 
     const [showModal, setShowModal] = useState(false);
@@ -39,6 +43,7 @@ function TimelinePublica(referencia) {
         async function DetalhesProjeto() {
                 await api.get('v1/api/projects/' + referencia.id)
                     .then(response => {
+                        console.log(response.data);
                         setProjeto(response.data);
                         setSpinner(false);
                     })
